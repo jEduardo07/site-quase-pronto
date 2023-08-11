@@ -1,0 +1,594 @@
+                                            HOMEcomponente
+
+<main>
+    <div class="banner" id="banner_one">
+      <h1>iPhone SE</h1>
+      <h2>Lots of love. Less to spend.</h2>
+      <p><a [routerLink]="'/announcements'">Learn more ></a></p>
+    </div>
+  
+    <div class="banner" id="banner_two">
+      <h1>iPhone 11</h1>
+      <h2>Just the right amount of everything.</h2>
+      <p><a [routerLink]="'/watch-details'">Learn more ></a></p>
+    </div>
+  
+    <div class="banner" id="banner_three">
+      <h1>iPhone 11 Pro</h1>
+      <h2>Pro cameras. Pro display. Pro performance.</h2>
+      <p><a href="/">Learn more ></a></p>
+    </div>
+  
+    <div class="category">
+      <div class="box" id="box1">
+        <h1>WWDC20</h1>
+        <h2>Take a look at all of the announcements.</h2> <br>
+        <p><a [routerLink]="'/announcements'">Watch the keynote on our US site ></a></p>
+      </div>
+      <div class="box" id="box2">
+        <h1>Watch</h1>
+        <p class="label">Series 5</p>
+        <h2>With the Always-On Retina Display.</h2>
+        <p><a [routerLink]="'/watch-details'">Learn more ></a></p>
+      </div>
+    </div>
+    <div class="category">
+      <div class="box" id="box3">
+        <h1>MacBook Pro</h1>
+        <h2>Power. Moves.</h2> <br>
+        <p><a href="/">Learn more ></a></p>
+      </div>
+      <div class="box" id="box4">
+        <h1>iPad Pro</h1>
+        <h2>Your next computer is not a computer.</h2>
+        <p><a href="/">Learn more ></a></p>
+      </div>
+    </div>
+  </main>
+                                         Home SCSS
+
+main {
+    padding-top: 40px;
+  }
+  
+  .banner {
+    background-size: cover;
+    height: 90vh;
+    padding-top: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+  
+    h1 {
+      font-size: 40pt;
+    }
+  
+    h2 {
+      font-size: 26pt;
+      font-weight: lighter;
+    }
+  
+    a {
+      font-size: 16pt;
+      font-weight: bold;
+      text-decoration: none;
+    }
+  }
+  
+  #banner_one {
+    background-image: url('assets/bg1.jpg');
+    background-position-y: -150px;
+  }
+  
+  #banner_two {
+    background-image: url('assets/bg2.jpg');
+    background-position-y: -50px;
+  }
+  
+  #banner_three {
+    background-image: url('assets/bg3.jpg');
+    background-position-y: -100px;
+  }
+  
+  .category {
+    display: flex;
+  
+    .box {
+      text-align: center;
+      height: 80vh;
+      width: 50%;
+      margin: 10px;
+      background-size: cover;
+      padding-top: 20px;
+      color: white;
+  
+      a {
+        text-decoration: none;
+        font-size: 14pt;
+        padding-top: 20px;
+      }
+    }
+  
+    #box1 {
+      background-image: url('assets/card1.jpg');
+    }
+  
+    #box2 {
+      background-image: url('assets/card2.jpg');
+      color: black;
+  
+      .label {
+        color: red;
+        font-size: 14pt;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+    }
+  
+    #box3 {
+      background-image: url('assets/card3.jpg');
+    }
+  
+    #box4 {
+      background-image: url('assets/card4.jpg');
+      color: black;
+    }
+  }
+  
+  a:hover {
+    text-decoration: underline !important;
+  }
+
+                                  home typescript
+
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
+})
+export class HomeComponent {
+
+  constructor(private router: Router) { }
+
+  goToAnnouncements() {
+    this.router.navigate(['/announcements']);
+  }
+
+  goToWatchDetails() {
+    this.router.navigate(['/watch-details']);
+  }
+}
+
+                       Prodruct html
+
+
+<div>
+    <section id="produto-favoritos">
+      <h2>Confira aqui os seus imóveis favoritos:</h2>
+      <mat-grid-list cols="3" rowHeight="3:4">
+        <mat-grid-tile *ngFor="let produto of produtos; let i = index">
+          <mat-card *ngIf="produto.favorito">
+            <img mat-card-image [src]="produto.foto" [alt]="produto.titulo" />
+            <mat-card-content>
+              <h3>{{ produto.titulo }}</h3>
+              <ul>
+                <li>memoria: {{ produto.memoria }}</li>
+                <li>ram: {{ produto.ram }}</li>
+                <li>Sistema Operacional: {{ produto.sistema }} </li>
+                <li>Preço: {{ produto.preco | currency }}</li>
+              </ul>
+            </mat-card-content>
+            <mat-card-actions>
+              <button
+                [class]="produto.favorito === false ? 'favorite' : 'favorite-checked'"
+                [title]="produto.favorito === false ? 'Adicionar aos favoritos' : 'Remover dos favoritos'"
+                mat-button
+                (click)="toggleFavorito(i)">
+                <mat-icon aria-hidden="false" fontIcon="favorite"></mat-icon>
+              </button>
+              <button mat-button (click)="verDetalhes(produto.id)">Mais detalhes</button>
+            </mat-card-actions>
+          </mat-card>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </section>
+  
+    <section id="lista-produto">
+      <h2>Todos os produtos:</h2>
+      <mat-grid-list cols="3" rowHeight="3:4">
+        <mat-grid-tile *ngFor="let produto of produtos; let i = index">
+          <mat-card>
+            <img mat-card-image [src]="produto.foto" [alt]="produto.titulo" />
+            <mat-card-content>
+              <h3>{{ produto.titulo }}</h3>
+              <ul>
+                <li>memoria: {{ produto.memoria }}</li>
+                <li>ram: {{ produto.ram }}</li>
+                <li>Sistema Operacional: {{ produto.sistema }} </li>
+                <li>Preço: {{ produto.preco | currency }}</li>
+              </ul>
+            </mat-card-content>
+            <mat-card-actions>
+              <button
+                [class]="produto.favorito === false ? 'favorite' : 'favorite-checked'"
+                [title]="produto.favorito === false ? 'Adicionar aos favoritos' : 'Remover dos favoritos'"
+                mat-button
+                (click)="toggleFavorito(i)">
+                <mat-icon aria-hidden="false" fontIcon="favorite"></mat-icon>
+              </button>
+              <button mat-button (click)="verDetalhes(produto.id)">Mais detalhes</button>
+            </mat-card-actions>
+          </mat-card>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </section>
+  </div>
+
+
+                                         product scss
+
+
+.container {
+    width: 1140px;
+    display: block;
+    margin: auto;
+    h1 {
+        padding-top: 20px;
+        font-family: $fonte-principal;
+        font-size: $grande;
+        color: $cor-principal;
+    }
+    h2 {
+        font-family: $fonte-principal;
+        font-size: $grande;
+        color: $cor-principal;
+    }  
+    mat-grid-tile {
+        mat-card {
+            background-color: $branco;
+            margin: 10px;
+            box-shadow: $card-shadow;
+            transition: $card-transition;
+            &:hover {
+                box-shadow: $card-shadow-hover;
+            }
+            img {
+                width: 100%;
+            }
+            mat-card-content {
+                h3 {
+                    font-family: $fonte-principal;
+                    font-size: $grande;
+                    color: $cinza-escuro;
+                    padding-top: 15px;
+                }
+                ul {
+                    padding-top: 0px;
+                    padding-left: 0px;
+                    padding-bottom: 20px;
+                    list-style-type: none;
+                    li {
+                        font-family: $fonte-secundaria;
+                        color: $cinza-medio;
+                        font-size: $media;
+                        line-height: $grande;
+                    }
+                }
+            }
+            mat-card-actions {
+                padding-bottom: 20px;
+                gap: 10px;
+                .favorite {
+                    width: 20%;
+                    background-color: $branco;
+                    border: 1px solid $cor-principal;
+                    mat-icon {
+                        color: $cor-principal;
+                    }
+                }
+                .favorite-checked {
+                    width: 20%;
+                    background-color: $cor-principal;
+                }
+                button {
+                    display: block;
+                    width: 80%;
+                    height: 48px;
+                    cursor: pointer;
+                    border: none;
+                    border-radius: 4px;
+                    background-color: $cor-secundaria;
+                    color: $branco;
+                    font-family: $fonte-secundaria;
+                    font-size: $media;
+
+                }
+            }
+        }
+    }
+    #lista-produto {
+        padding-top: 80px;
+    }
+}
+
+                                       Produto typeScript
+
+
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+
+@Component({
+  selector: 'app-product',
+  templateUrl: './product.component.html',
+  styleUrls: ['./product.component.scss'],
+  standalone: true,
+  imports: [MatGridListModule, MatCardModule, MatIconModule],
+})
+export class ProductComponent {
+
+  constructor(private router: Router) { }
+
+  verDetalhes(imovelId: string) {
+    this.router.navigate(['/detalhes', imovelId]);
+  }
+
+  toggleFavorito(index: number): void {
+    this.produtos[index].favorito = !this.produtos[index].favorito;
+  }
+
+  nome: string = 'Pedro';
+  sobrenome: string = 'dos Santos';
+  data: any = new Date();
+  produtos: Array<any> = [
+    {
+      id: 1,
+      titulo: 'Iphone 14',
+      foto: 'assets/Iphone14ProMax.jpg',
+      memoria: '168 GB',
+      ram: '4 GB',
+      sistema: 'iOS 15',
+      preco: 7000,
+      favorito: true
+    },
+    {
+      id: 2,
+      titulo: 'Iphone 13',
+      foto: 'assets/Iphone13.jpg',
+      memoria: '2 GB',
+      ram: '1 GB',
+      sistema: 'iOS 14',
+      preco: 120000,
+      favorito: false
+    },
+    {
+      id: 3,
+      titulo: 'Mecbook Air13',
+      foto: 'assets/macbookAir13.jpg',
+      memoria: 7,
+      ram: 5,
+      sistema: 800,
+      preco: 1500000,
+      favorito: false
+    },
+    {
+      id: 4,
+      titulo: 'MecBook Pro 16',
+      foto: 'assets/mecbookpro.jpg',
+      memoria: 1,
+      ram: 1,
+      sistema: 36,
+      preco: 180000,
+      favorito: false
+    },
+    {
+      id: "rg93h8eirbgrebngn",
+      titulo: 'Ipad air 5',
+      foto: 'assets/ipadair5.jpg',
+      memoria: 0,
+      ram: 1,
+      sistema: 25,
+      preco: 250000,
+      favorito: true
+    },
+    {
+      id: "8493ty34hg489gh",
+      titulo: 'Ipad Pro',
+      foto: 'assets/ipadpro.jpg',
+      memoria: 3,
+      ram: 3,
+      sistema: 200,
+      preco: 1500000,
+      favorito: true
+    }
+  ];
+}
+
+                                      Signup coponente
+
+<div class="container">
+    <div class="header">
+      <h2>Criar Uma Conta</h2>
+    </div>
+    <form [formGroup]="form" class="form" (ngSubmit)="onSubmit()">
+      <div class="form-control" [ngClass]="{'success': form.controls.username.valid, 'error': form.controls.username.invalid && form.controls.username.dirty}">
+        <label for="username">Nome de usuário</label>
+        <input type="text" id="username" placeholder="Digite seu nome de usuário..." formControlName="username"/>
+        <i class="fas fa-exclamation-circle"></i>
+        <i class="fas fa-check-circle"></i>
+        <small>Mensagem de erro</small>
+      </div>
+      <div class="form-control" [ngClass]="{'success': form.controls.email.valid, 'error': form.controls.email.invalid && form.controls.email.dirty}">
+        <label for="email">Email</label>
+        <input type="text" id="email" placeholder="Digite seu email.." formControlName="email"/>
+        <i class="fas fa-exclamation-circle"></i>
+        <i class="fas fa-check-circle"></i>
+        <small>Mensagem de erro</small>
+      </div>
+      <div class="form-control" [ngClass]="{'success': form.controls.password.valid, 'error': form.controls.password.invalid && form.controls.password.dirty}">
+        <label for="password">Senha</label>
+        <input type="password" id="password" placeholder="Digite sua senha..." formControlName="password"/>
+        <i class="fas fa-exclamation-circle"></i>
+        <i class="fas fa-check-circle"></i>
+        <small>Mensagem de erro</small>
+      </div>
+      <div class="form-control" [ngClass]="{'success': form.controls.passwordConfirmation.valid, 'error': form.controls.passwordConfirmation.invalid && form.controls.passwordConfirmation.dirty}">
+        <label for="password-confirmation">Confirmação de senha</label>
+        <input type="password" id="password-confirmation" placeholder="Digite sua senha novamente..." formControlName="passwordConfirmation"/>
+        <i class="fas fa-exclamation-circle"></i>
+        <i class="fas fa-check-circle"></i>
+        <small>Mensagem de erro</small>
+      </div>
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+                                  
+                                        Sign up scss
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  body {
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(90deg, #00dbde 0%, #fc00ff 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .container {
+    background-color: #fafafa;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    width: 400px;
+    max-width: 100%;
+    overflow: hidden;
+  }
+  
+  .header {
+    background-color: #eee;
+    padding: 20px;
+  }
+  
+  .form {
+    padding: 20px;
+  }
+  
+  .form-control {
+    margin-bottom: 10px;
+    padding-bottom: 20px;
+    position: relative;
+  
+    label {
+      display: inline-block;
+      margin-bottom: 5px;
+    }
+  
+    input {
+      border: 2px solid #f0f0f0;
+      display: block;
+      border-radius: 10px;
+      font-size: 14px;
+      width: 100%;
+      padding: 10px;
+    }
+  
+    i {
+      position: absolute;
+      top: 45px;
+      right: 10px;
+      visibility: hidden;
+    }
+  
+    small {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      visibility: hidden;
+    }
+  }
+  
+  button.form {
+    background-color: #fc00ff;
+    border: 2px solid #fc00ff;
+    color: #fff;
+    font-size: 14px;
+    width: 100%;
+    border-radius: 10px;
+    padding: 10px;
+  }
+  
+  /* Error and Success */
+  .form-control {
+    &.success {
+      input {
+        border-color: #2ecc71;
+      }
+      
+      i.fa-check-circle {
+        color: #2ecc71;
+        visibility: visible;
+      }
+    }
+    
+    &.error {
+      input {
+        border-color: #e74c3c;
+      }
+      
+      i.fa-exclamation-circle {
+        color: #e74c3c;
+        visibility: visible;
+      }
+      
+      small {
+        visibility: visible;
+        color: #e74c3c;
+      }
+    }
+  }
+
+
+                               sign up typescript
+
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-registration-form',
+  templateUrl: './registration-form.component.html',
+  styleUrls: ['./registration-form.component.scss']
+})
+export class RegistrationFormComponent implements OnInit {
+  form!: FormGroup; 
+
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.form = this.fb.group({
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(7)]],
+      passwordConfirmation: ['', Validators.required]
+    });
+  }
+
+  onSubmit() {
+    if (this.form.valid) {
+      console.log('Formulário válido!');
+    }
+  }
+}
+
+
+
